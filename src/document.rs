@@ -2,9 +2,10 @@
 #[allow(dead_code)]
 #[derive(Debug, Clone)]
 pub struct Section {
-    level: u8,
-    title: String,
+    pub level: u8,
+    pub title: String,
     body: String,
+    children: Vec<Section>,
 }
 
 impl Section {
@@ -14,17 +15,8 @@ impl Section {
             level: 0,
             title: String::new(),
             body: String::new(),
+            children: Vec::new(),
         }
-    }
-
-    /// Set section level
-    pub fn level(&mut self, level: u8) {
-        self.level = level;
-    }
-
-    /// Set the section's title
-    pub fn title(&mut self, title: String) {
-        self.title = title;
     }
 
     /// Appends the given line to the section's body
@@ -43,6 +35,11 @@ impl Section {
     pub fn append_to_body(&mut self, line: String) {
         self.body.push_str(&line);
         self.body.push('\n');
+    }
+
+    /// Add a child to this section.
+    pub fn add_child(&mut self, child: Section) {
+        self.children.push(child);
     }
 }
 
