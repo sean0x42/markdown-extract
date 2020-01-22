@@ -18,7 +18,6 @@ name = "markdown-extract"
 path = "src/bin/markdown_extract.rs"
 
 [dependencies]
-env_logger = "*"
-log = "*"
-regex = "*"
+log = "0.4"
+regex = "1.3"
 structopt = "0.3"
