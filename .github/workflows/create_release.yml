@@ -1,0 +1,31 @@
+name: Create Release
+
+on:
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # e.g. v1.0, v20.15.10
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v1
+    
+    - name: Install markdown-extract
+      run: cargo install markdown_extract
+
+    - name: Get release body
+      run: export RELEASE_BODY=`markdown_extract --ignore-first-heading ${{ github.ref }} CHANGELOG.md`
+
+    - name: Create release
+      id: create_release
+      uses: actions/create_release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: ${{ env.RELEASE_BODY }}
