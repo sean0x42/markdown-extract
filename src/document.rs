@@ -11,7 +11,7 @@ pub struct Section {
 
     /// Raw markdown body.
     /// Does not include any child sections. See the `children` property for child content.
-    body: String,
+    pub body: String,
 
     /// An optional pointer to a parent section.
     /// This property should always be `Some`, unless the section is located at the root of the
@@ -19,7 +19,7 @@ pub struct Section {
     pub parent: Option<usize>,
 
     /// A vector of child sections
-    children: Vec<usize>,
+    pub children: Vec<usize>,
 }
 
 impl Section {

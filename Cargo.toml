@@ -1,10 +1,20 @@
 [package]
-name = "markdown-sections"
-version = "0.1.0"
-authors = ["Sean Bailey <sean@seanbailey.io>"]
+name = "markdown-extract"
+description = "Extract sections of a markdown file."
+version = "0.1.0-alpha"
+authors = ["Sean Bailey <hello@seanbailey.dev>"]
 edition = "2018"
+
+[lib]
+name = "markdown_extract"
+path = "src/lib.rs"
+
+[[bin]]
+name = "markdown-extract"
+path = "src/bin/markdown_extract.rs"
 
 [dependencies]
 env_logger = "*"
 log = "*"
 regex = "*"
+structopt = "0.3"
