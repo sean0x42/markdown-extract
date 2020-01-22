@@ -2,10 +2,24 @@
 #[allow(dead_code)]
 #[derive(Debug, Clone)]
 pub struct Section {
+    /// Section depth. In markdown, legal values range from 1 to 6, although this implementation
+    /// technically allows more.
     pub level: u8,
+
+    /// Title of section
     pub title: String,
+
+    /// Raw markdown body.
+    /// Does not include any child sections. See the `children` property for child content.
     body: String,
-    children: Vec<Section>,
+
+    /// An optional pointer to a parent section.
+    /// This property should always be `Some`, unless the section is located at the root of the
+    /// document.
+    pub parent: Option<usize>,
+
+    /// A vector of child sections
+    children: Vec<usize>,
 }
 
 impl Section {
@@ -15,6 +29,7 @@ impl Section {
             level: 0,
             title: String::new(),
             body: String::new(),
+            parent: None,
             children: Vec::new(),
         }
     }
@@ -38,7 +53,7 @@ impl Section {
     }
 
     /// Add a child to this section.
-    pub fn add_child(&mut self, child: Section) {
+    pub fn add_child(&mut self, child: usize) {
         self.children.push(child);
     }
 }

@@ -8,7 +8,7 @@ use std::io::{prelude::*, BufReader, Result};
 pub struct Parser {
     re: Regex,
     document: Document,
-    current: Option<Section>,
+    current: Option<usize>,
 }
 
 impl Parser {
@@ -39,9 +39,11 @@ impl Parser {
 
             // Handle Regex not matching (e.g. normal line)
             None => {
-                if let Some(current) = &mut self.current {
-                    current.append_to_body(line);
+                // Append to current section, if one has been defined
+                if let Some(current) = self.current {
+                    self.document[current].append_to_body(line);
                 }
+
                 return;
             }
         };
@@ -50,29 +52,48 @@ impl Parser {
         let mut new_section = Section::new();
         new_section.level = caps[1].len().try_into().unwrap();
         new_section.title = (&caps[2]).to_string();
-        debug!("\n{:#?}", new_section);
 
-        // Determine where to place new section in tree
-        match &mut self.current {
-            Some(current) => {
-                if new_section.level < current.level {
-                    // New section should be child
-                    current.add_child(new_section);
-                    debug!("Woof {:?}", current);
-                } else if new_section.level == current.level {
-                    // New section should be adjacent
-                    self.document.push(current.clone());
-                    self.current = Some(new_section);
-                } else {
-                    // Compare against parent
-                    todo!("Climb tree");
-                }
-            }
+        // Find this section a home in the document
+        let index = self.document.len();
+        self.find_home(&mut new_section, index);
+        self.document.push(new_section);
+    }
 
-            // No current section
+    /// Find the given section a home within the document tree
+    fn find_home(&mut self, section: &mut Section, index: usize) {
+        // Get current section
+        let current_index = match self.current {
+            Some(current) => current,
             None => {
-                self.current = Some(new_section);
+                debug!("Found initial section");
+                self.current = Some(index);
+                return;
             }
+        };
+        let current = &mut self.document[current_index];
+
+        // Determine whether to add as child, sibling, or climb the tree
+        if current.level < section.level {
+            // New section should be child
+            debug!("Found child section");
+            section.parent = Some(current_index);
+            current.add_child(index);
+            self.current = Some(index);
+        } else if current.level == section.level {
+            // New section should be adjacent
+            debug!("Found adjacent section");
+            self.current = Some(index);
+            section.parent = current.parent;
+
+            // If parent exists, add new section as a child
+            if let Some(parent) = section.parent {
+                self.document[parent].add_child(index);
+            }
+        } else {
+            // Compare against parent
+            debug!("Found ancestor section. Climbing...");
+            self.current = current.parent;
+            self.find_home(section, index);
         }
     }
 }
