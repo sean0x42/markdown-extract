@@ -18,21 +18,20 @@ View the help guide if you like.
 ```console
 $ markdown-extract -h
 markdown-extract 0.1.0-alpha
-Parses a markdown document into a tree of sections. Then returns any sections which match the given pattern
+Extracts sections of a markdown file
 
 USAGE:
-    markdown-extract [FLAGS] <pattern> <path>
+    markdown-extract [FLAGS] <title> <path>
 
 FLAGS:
-    -s, --case-sensitive    Regular expression should be treated as case sensitive
-    -h, --help              Prints help information
-        --no-children       Do not include any child sections in the output
-        --no-heading        Do not include the top level section heading
-    -V, --version           Prints version information
+    -s, --case-sensitive          Title is case sensitive
+    -h, --help                    Prints help information
+    -i, --ignore-first-heading    Do not include the top level section heading
+    -V, --version                 Prints version information
 
 ARGS:
-    <title>      A title to find in section headings
-    <path>       Path to markdown file
+    <title>    A title to find in section headings
+    <path>     Path to markdown file
 ```
 
 Then extract matching sections in a markdown file.

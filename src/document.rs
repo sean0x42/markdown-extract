@@ -35,18 +35,6 @@ impl Section {
     }
 
     /// Appends the given line to the section's body
-    ///
-    /// Note: This function always leaves a trailing new line.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// let section = Section::new(1, String::from("Hello, world!"));
-    /// section.append_to_body(String::from(""));
-    /// section.append_to_body(String::from("The quick brown fox jumps over the lazy dog"));
-    ///
-    /// assert_eq!(section.body, "\nThe quick brown fox jumps over the lazy dog\n");
-    /// ```
     pub fn append_to_body(&mut self, line: String) {
         self.body.push_str(&line);
         self.body.push('\n');

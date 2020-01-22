@@ -5,11 +5,11 @@ use std::fs::File;
 use std::path::PathBuf;
 use structopt::StructOpt;
 
-/// Extracts the first matching section of a markdown file that has the given title.
+/// Extracts sections of a markdown file.
 #[derive(StructOpt)]
 #[structopt(name = "markdown-extract")]
 struct Opts {
-    /// Regular expression should be treated as case sensitive
+    /// Title is case sensitive
     #[structopt(short = "s", long)]
     case_sensitive: bool,
 
