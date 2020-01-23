@@ -10,13 +10,9 @@ edition = "2018"
 exclude = [".github/*"]
 readme = "README.md"
 
-[lib]
-name = "markdown_extract"
-path = "src/lib.rs"
-
 [[bin]]
 name = "markdown-extract"
-path = "src/bin/markdown_extract.rs"
+path = "src/bin.rs"
 
 [dependencies]
 log = "0.4"
