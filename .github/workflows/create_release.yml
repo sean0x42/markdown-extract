@@ -15,14 +15,14 @@ jobs:
       uses: actions/checkout@v1
     
     - name: Install markdown-extract
-      run: cargo install markdown_extract
+      run: cargo install markdown-extract
 
     - name: Get release body
-      run: export RELEASE_BODY=`markdown_extract --ignore-first-heading ${{ github.ref }} CHANGELOG.md`
+      run: export RELEASE_BODY=`markdown-extract --ignore-first-heading ${{ github.ref }} CHANGELOG.md`
 
     - name: Create release
       id: create_release
-      uses: actions/create_release@v1
+      uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
