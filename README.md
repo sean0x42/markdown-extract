@@ -7,10 +7,10 @@ a `CHANGELOG.md`.
 
 ## Usage 
 
-Start by installing `markdown_extract`. Requires Cargo.
+Start by installing `markdown-extract`. Requires Cargo.
 
 ```
-cargo install markdown_extract 
+cargo install markdown-extract 
 ```
 
 View the help guide if you like.
