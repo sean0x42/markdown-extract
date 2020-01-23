@@ -1,7 +1,7 @@
 [package]
 name = "markdown-extract"
 description = "Extract sections of a markdown file."
-version = "0.1.0-alpha"
+version = "0.1.1"
 authors = ["Sean Bailey <hello@seanbailey.dev>"]
 license = "MIT"
 repository = "https://github.com/sean0x42/markdown-extract"
