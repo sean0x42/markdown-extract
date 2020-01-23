@@ -17,15 +17,26 @@ jobs:
     - name: Install markdown-extract
       run: cargo install markdown-extract
 
+    - name: Get tag string
+      id: tag
+      run: echo ::set-output name=value::${GITHUB_REF/refs\/tags\//}
+
     - name: Get release body
-      run: export RELEASE_BODY=`markdown-extract --ignore-first-heading ${{ github.ref }} CHANGELOG.md`
+      id: release_notes
+      run: |
+        text=`~/.cargo/bin/markdown-extract -i ${{ steps.tag.outputs.value }} CHANGELOG.md`
+        echo $text
+        text="${text//'%'/'%25'}"
+        text="${text//$'\n'/'%0A'}"
+        text="${text//$'\r'/'%0D'}"
+        echo "::set-output name=value::$text"
 
     - name: Create release
       id: create_release
-      uses: actions/create-release@v1
+      uses: actions/create-release@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        body: ${{ env.RELEASE_BODY }}
+        release_name: Release ${{ steps.tags.outputs.value }}
+        body: ${{ steps.release_notes.outputs.value }}
