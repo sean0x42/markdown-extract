@@ -17,7 +17,7 @@ View the help guide if you like.
 
 ```console
 $ markdown-extract -h
-markdown-extract 0.1.0-alpha
+markdown-extract 0.1.1
 Extracts sections of a markdown file
 
 USAGE:
@@ -37,8 +37,8 @@ ARGS:
 Then extract matching sections in a markdown file.
 
 ```console
-$ markdown-extract v0.1.0-alpha CHANGELOG.md
-## v0.1.0-alpha
+$ markdown-extract v0.1.1 CHANGELOG.md
+## v0.1.1
 
 ...
 ```
