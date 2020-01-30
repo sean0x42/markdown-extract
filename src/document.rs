@@ -11,7 +11,7 @@ pub struct Section {
 
     /// Raw markdown body.
     /// Does not include any child sections. See the `children` property for child content.
-    pub body: String,
+    pub body: Vec<String>,
 
     /// An optional pointer to a parent section.
     /// This property should always be `Some`, unless the section is located at the root of the
@@ -28,7 +28,7 @@ impl Section {
         Section {
             level: 0,
             title: String::new(),
-            body: String::new(),
+            body: Vec::new(),
             parent: None,
             children: Vec::new(),
         }
@@ -36,8 +36,7 @@ impl Section {
 
     /// Appends the given line to the section's body
     pub fn append_to_body(&mut self, line: String) {
-        self.body.push_str(&line);
-        self.body.push('\n');
+        self.body.push(line);
     }
 
     /// Add a child to this section.
