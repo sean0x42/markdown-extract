@@ -17,28 +17,30 @@ View the help guide if you like.
 
 ```console
 $ markdown-extract -h
-markdown-extract 0.1.1
-Extracts sections of a markdown file
+markdown-extract 1.0.0
+Extract sections of a markdown file
 
 USAGE:
-    markdown-extract [FLAGS] <title> <path>
+    markdown-extract [FLAGS] <pattern> <path>
 
 FLAGS:
-    -s, --case-sensitive          Title is case sensitive
+    -s, --case-sensitive          Treat pattern as case sensitive
+    -f, --first                   Only return the first match
     -h, --help                    Prints help information
     -i, --ignore-first-heading    Do not include the top level section heading
+    -r, --regex                   Compile pattern as a regular expression
     -V, --version                 Prints version information
 
 ARGS:
-    <title>    A title to find in section headings
-    <path>     Path to markdown file
+    <pattern>    Pattern to match against section headings
+    <path>       Path to markdown file
 ```
 
 Then extract matching sections in a markdown file.
 
 ```console
-$ markdown-extract v0.1.1 CHANGELOG.md
-## v0.1.1
+$ markdown-extract --fr "^v1" CHANGELOG.md
+## v1.0.0
 
 ...
 ```

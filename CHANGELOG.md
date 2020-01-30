@@ -4,7 +4,9 @@ Patch notes are automatically extracted from this changelog whenever a tag is
 pushed to the GitHub repository. The tag name must match a heading exactly.
 
 
-## Next Release
+## v1.0.0
+
+The first proper release of `markdown-extract`! :tada:
 
 - Add `--regex` flag, which enables the use of regular expressions to search
   for section titles.
