@@ -1,11 +1,12 @@
 mod regex;
 mod simple;
 
-pub use regex::RegexMatcher;
-pub use simple::SimpleMatcher;
+pub use self::regex::RegexMatcher;
+use crate::document::Document;
 use crate::Opts;
+pub use simple::SimpleMatcher;
 
 pub trait Matcher {
     /// Find any sections within the document that match
-    pub fn match(document: &Document, options: &Opts) -> Document;
+    fn get_matches(document: &Document, opts: &Opts) -> Document;
 }
