@@ -1,8 +1,10 @@
 pub mod document;
+mod error;
 mod matchers;
 mod parser;
 
 use document::{Document, Section};
+use error::NoMatchesError;
 use matchers::{Matcher, RegexMatcher, SimpleMatcher};
 use parser::Parser;
 use std::convert::TryInto;
@@ -61,7 +63,6 @@ fn print_section(document: &Document, section: &Section, ignore_first_heading: b
 }
 
 fn run() -> Result<(), Box<dyn Error>> {
-    // Get opts
     let opts = Opts::from_args();
 
     // Create parser and get file
@@ -76,20 +77,15 @@ fn run() -> Result<(), Box<dyn Error>> {
         SimpleMatcher::get_matches(&document, &opts)
     };
 
-    // Handle no matches
     if matches.is_empty() {
-        println!("No matches.");
-        return Ok(());
+        return Err(Box::new(NoMatchesError::new()));
     }
 
-    // Only print the first match
     if opts.first {
-        // It's okay to use `[0]` here since we check if the doc is empty above
         print_section(&document, &matches[0], opts.ignore_first_heading);
         return Ok(());
     }
 
-    // Print matching sections
     for section in matches {
         print_section(&document, &section, opts.ignore_first_heading);
     }
