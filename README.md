@@ -4,14 +4,33 @@ Extract sections of a markdown file. This project mostly exists to help me learn
 Rust, and to fill a niche requirement for extracting patch notes from
 a `CHANGELOG.md`.
 
+## Installation
+
+If you've got Rust installed on your system, you can simple install
+`markdown-extract` with Cargo.
+
+```console
+$ cargo install markdown-extract 
+...
+```
+
+### Docker
+
+A Docker container is also available, and can be installed with the following
+command:
+
+```console
+$ docker pull sean0x42/markdown-extract
+```
+
+You can then run the container with the following command:
+
+```console
+$ docker run -it sean0x42/markdown-extract markdown-extract --help
+```
+
 
 ## Usage 
-
-Start by installing `markdown-extract`. Requires Cargo.
-
-```
-cargo install markdown-extract 
-```
 
 View the help guide if you like.
 
