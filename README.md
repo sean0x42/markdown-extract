@@ -10,8 +10,7 @@ If you've got Rust installed on your system, you can simple install
 `markdown-extract` with Cargo.
 
 ```console
-$ cargo install markdown-extract 
-...
+$ cargo install markdown-extract
 ```
 
 ### Docker
@@ -29,14 +28,13 @@ You can then run the container with the following command:
 $ docker run -it sean0x42/markdown-extract --help
 ```
 
-
-## Usage 
+## Usage
 
 View the help guide if you like.
 
 ```console
-$ markdown-extract -h
-markdown-extract 1.0.0
+$ markdown-extract --help
+markdown-extract 1.1.0
 Extract sections of a markdown file
 
 USAGE:
@@ -59,11 +57,10 @@ Then extract matching sections in a markdown file.
 
 ```console
 $ markdown-extract --fr "^v1" CHANGELOG.md
-## v1.0.0
+## v1.1.0
 
 ...
 ```
-
 
 ## Use Cases
 
