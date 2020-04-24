@@ -7,6 +7,7 @@ pushed to the GitHub repository. The tag name must match a heading exactly.
 ## Next Release
 
 - Exit with code 1 if no matches are found (#3, thanks @brennerm)
+- Publish `markdown-extract` as a Docker image (#2, thanks @brennerm)
 
 
 ## v1.0.0
