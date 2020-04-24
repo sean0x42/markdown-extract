@@ -1,8 +1,8 @@
-FROM rust:1.41
+FROM rust:1.43
 
 WORKDIR /usr/src/markdown-extract
 COPY . .
 
 RUN cargo install --path .
 
-CMD ["markdown-extract", "--help"]
+ENTRYPOINT ["markdown-extract"]

@@ -26,7 +26,7 @@ $ docker pull sean0x42/markdown-extract
 You can then run the container with the following command:
 
 ```console
-$ docker run -it sean0x42/markdown-extract markdown-extract --help
+$ docker run -it sean0x42/markdown-extract --help
 ```
 
 
