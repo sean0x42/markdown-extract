@@ -1,8 +1,19 @@
-# Markdown Extract
+<div align="center">
 
-Extract sections of a markdown file. This project mostly exists to help me learn
-Rust, and to fill a niche requirement for extracting patch notes from
-a `CHANGELOG.md`.
+![Markdown Magic](./logo.svg)
+
+</div>
+
+---
+
+Markdown Magic is currently getting a face lift.
+
+
+<br><br><br>
+
+---
+
+# OLD README
 
 ## Installation
 
@@ -61,9 +72,3 @@ $ markdown-extract --fr "^v1" CHANGELOG.md
 
 ...
 ```
-
-## Use Cases
-
-There aren't many. I created this tool to extract patch notes from a
-`CHANGELOG.md` by version. If you have another use for this binary, please let
-me know!
