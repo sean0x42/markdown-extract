@@ -1,104 +1,46 @@
-pub mod document;
-mod error;
-mod matchers;
-mod parser;
+mod commands;
 
-use document::{Document, Section};
-use error::NoMatchesError;
-use matchers::{Matcher, RegexMatcher, SimpleMatcher};
-use parser::Parser;
-use std::convert::TryInto;
-use std::error::Error;
-use std::fs::File;
+use commands::{extract, view};
 use std::path::PathBuf;
 use structopt::StructOpt;
 
-/// Extract sections of a markdown file.
-#[derive(StructOpt)]
-#[structopt(name = "markdown-extract")]
-pub struct Opts {
-    /// Only return the first match
-    #[structopt(short, long)]
-    first: bool,
+#[derive(StructOpt, Debug)]
+enum MarkdownMagic {
+    /// Previews a markdown file in the terminal
+    #[structopt(visible_alias = "vw")]
+    View,
 
-    /// Compile pattern as a regular expression.
-    ///
-    /// Documentation for the regex syntax can be found at
-    /// <https://docs.rs/regex/1.3.3/regex/index.html#syntax>
-    #[structopt(short, long)]
-    regex: bool,
+    /// Extracts sections of raw markdown
+    #[structopt(visible_alias = "ex")]
+    Extract {
+        #[structopt(short = "i", long)]
+        case_insensitive: bool,
 
-    /// Treat pattern as case sensitive
-    #[structopt(short = "s", long)]
-    case_sensitive: bool,
+        /// Only return the first matching section
+        #[structopt(short, long)]
+        first: bool,
 
-    /// Do not include the top level section heading
-    #[structopt(short, long)]
-    ignore_first_heading: bool,
+        /// Regular expression to match against section headings
+        pattern: String,
 
-    /// Pattern to match against section headings
-    pattern: String,
-
-    /// Path to markdown file
-    #[structopt(parse(from_os_str))]
-    path: PathBuf,
-}
-
-/// Print a section to stdout
-fn print_section(document: &Document, section: &Section, ignore_first_heading: bool) {
-    // Only print first heading if needed
-    if !ignore_first_heading {
-        println!(
-            "{} {}",
-            "#".repeat(section.level.try_into().unwrap()),
-            section.title
-        );
-    }
-    println!("{}", section.body.join("\n"));
-
-    // Print children
-    for child in &section.children {
-        print_section(&document, &document[*child], false);
-    }
-}
-
-fn run() -> Result<(), Box<dyn Error>> {
-    let opts = Opts::from_args();
-
-    // Create parser and get file
-    let mut parser = Parser::new();
-    let file = File::open(&opts.path)?;
-    let document = parser.parse_file(file)?;
-
-    // Match
-    let matches = if opts.regex {
-        RegexMatcher::get_matches(&document, &opts)
-    } else {
-        SimpleMatcher::get_matches(&document, &opts)
-    };
-
-    if matches.is_empty() {
-        return Err(Box::new(NoMatchesError::new()));
-    }
-
-    if opts.first {
-        print_section(&document, &matches[0], opts.ignore_first_heading);
-        return Ok(());
-    }
-
-    for section in matches {
-        print_section(&document, &section, opts.ignore_first_heading);
-    }
-
-    Ok(())
+        /// Path to markdown file
+        #[structopt(parse(from_os_str))]
+        path: PathBuf,
+    },
 }
 
 fn main() {
-    std::process::exit(match run() {
-        Ok(_) => 0,
-        Err(error) => {
-            println!("Error: {}", error);
-            1
-        }
-    });
+    let opts = MarkdownMagic::from_args();
+    println!("{:?}", opts);
+
+    match opts {
+        MarkdownMagic::View => view(),
+
+        MarkdownMagic::Extract {
+            case_insensitive,
+            first,
+            pattern,
+            path,
+        } => extract(pattern, path, case_insensitive, first),
+    }
 }

@@ -8,6 +8,16 @@
 
 Markdown Magic is currently getting a face lift.
 
+## Installation
+
+> TODO
+
+You probably also want to add an alias to your `.bashrc` or `.zshrc`.
+
+```bash
+alias md="markdown-magic"
+```
+
 
 <br><br><br>
 
