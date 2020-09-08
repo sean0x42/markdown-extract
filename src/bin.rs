@@ -10,15 +10,21 @@ enum MarkdownMagic {
     #[structopt(visible_alias = "vw")]
     View,
 
-    /// Extracts sections of raw markdown
+    /// Extracts sections of raw markdown from a file, given a regular
+    /// expression to match against section headings.
     #[structopt(visible_alias = "ex")]
     Extract {
+        /// Ignores case
         #[structopt(short = "i", long)]
         case_insensitive: bool,
 
-        /// Only return the first matching section
+        /// Prints only the first matching section
         #[structopt(short, long)]
         first: bool,
+
+        /// Avoids printing headings that match the given pattern
+        #[structopt(short = "g", long)]
+        ignore_matching_headings: bool,
 
         /// Regular expression to match against section headings
         pattern: String,
@@ -31,7 +37,6 @@ enum MarkdownMagic {
 
 fn main() {
     let opts = MarkdownMagic::from_args();
-    println!("{:?}", opts);
 
     match opts {
         MarkdownMagic::View => view(),
@@ -39,8 +44,15 @@ fn main() {
         MarkdownMagic::Extract {
             case_insensitive,
             first,
+            ignore_matching_headings,
             pattern,
             path,
-        } => extract(pattern, path, case_insensitive, first),
+        } => extract(
+            pattern,
+            path,
+            case_insensitive,
+            first,
+            ignore_matching_headings,
+        ),
     }
 }

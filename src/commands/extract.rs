@@ -7,6 +7,7 @@ use std::path::PathBuf;
 struct Extractor {
     pattern: Regex,
     first: bool,
+    ignore_matching_headings: bool,
 
     // State
     is_printing: bool,
@@ -15,7 +16,12 @@ struct Extractor {
 }
 
 impl Extractor {
-    pub fn new(pattern: &str, case_insensitive: bool, first: bool) -> Self {
+    pub fn new(
+        pattern: &str,
+        case_insensitive: bool,
+        first: bool,
+        ignore_matching_headings: bool,
+    ) -> Self {
         let re = RegexBuilder::new(&pattern)
             .size_limit(1024 * 100) // 100 kb
             .case_insensitive(case_insensitive)
@@ -25,6 +31,7 @@ impl Extractor {
         Extractor {
             pattern: re,
             first,
+            ignore_matching_headings,
             is_printing: false,
             is_inside_pre: false,
             print_depth: 0,
@@ -69,7 +76,10 @@ impl Extractor {
                 section_count += 1;
                 self.is_printing = true;
                 self.print_depth = heading_depth.unwrap();
-                self.print(&line);
+
+                if !self.ignore_matched_heading {
+                    self.print(&line);
+                }
             } else {
                 self.is_printing = false;
             }
@@ -126,6 +136,12 @@ impl Extractor {
     }
 }
 
-pub fn extract(pattern: String, path: PathBuf, case_insensitive: bool, first: bool) {
-    Extractor::new(&pattern, case_insensitive, first).run(path);
+pub fn extract(
+    pattern: String,
+    path: PathBuf,
+    case_insensitive: bool,
+    first: bool,
+    ignore_matching_headings: bool,
+) {
+    Extractor::new(&pattern, case_insensitive, first, ignore_matching_headings).run(path);
 }
