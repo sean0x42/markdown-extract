@@ -77,7 +77,7 @@ impl Extractor {
                 self.is_printing = true;
                 self.print_depth = heading_depth.unwrap();
 
-                if !self.ignore_matched_heading {
+                if !self.ignore_matching_headings {
                     self.print(&line);
                 }
             } else {
