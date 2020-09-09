@@ -1,69 +1,75 @@
-# Markdown Extract
+<div align="center">
 
-Extract sections of a markdown file. This project mostly exists to help me learn
-Rust, and to fill a niche requirement for extracting patch notes from
-a `CHANGELOG.md`.
+![Markdown Magic](./logo.svg)
 
-## Installation
+</div>
 
-If you've got Rust installed on your system, you can simple install
-`markdown-extract` with Cargo.
+---
 
-```console
-$ cargo install markdown-extract
-```
+A magical tool belt for working with markdown. You can:
 
-### Docker
+- [**Preview**](#preview) markdown files in your terminal (Coming soon) ✨
+- [**Build**](#build) markdown to HTML (Coming soon) ✨
+- [**Format**](#format) a markdown file (Coming soon) ✨
+- [**Extract**](#extract) sections according to a regular expression ✨
 
-A Docker container is also available, and can be installed with the following
-command:
+## Installation 🧙
 
-```console
-$ docker pull sean0x42/markdown-extract
-```
+> TODO
 
-You can then run the container with the following command:
+You probably also want to add an alias to your `.bashrc` or `.zshrc`.
 
-```console
-$ docker run -it sean0x42/markdown-extract --help
+```bash
+alias md="markdown-magic"
 ```
 
 ## Usage
 
-View the help guide if you like.
+### Preview
 
-```console
-$ markdown-extract --help
-markdown-extract 1.1.0
-Extract sections of a markdown file
+Coming soon!
 
-USAGE:
-    markdown-extract [FLAGS] <pattern> <path>
+### Build
 
-FLAGS:
-    -s, --case-sensitive          Treat pattern as case sensitive
-    -f, --first                   Only return the first match
-    -h, --help                    Prints help information
-    -i, --ignore-first-heading    Do not include the top level section heading
-    -r, --regex                   Compile pattern as a regular expression
-    -V, --version                 Prints version information
+Coming soon!
 
-ARGS:
-    <pattern>    Pattern to match against section headings
-    <path>       Path to markdown file
+### Format
+
+Coming soon!
+
+### Extract
+
+The `extract` command lets you pull out sections of markdown according to
+a regular expression. Given a document called `my-document.md`:
+
+```markdown
+# Welcome!
+
+This is my amazing markdown document.
+
+## Extract me!
+
+This section should be pulled out.
 ```
 
-Then extract matching sections in a markdown file.
+We could then extract the second section with the following command:
 
 ```console
-$ markdown-extract --fr "^v1" CHANGELOG.md
-## v1.1.0
+$ markdown-magic extract "Extract me!" my-document.md
+## Extract me!
 
-...
+This section should be pulled out.
 ```
 
-## Use Cases
+For more help and configuration, use the following command:
 
-There aren't many. I created this tool to extract patch notes from a
-`CHANGELOG.md` by version. If you have another use for this binary, please let
-me know!
+```console
+$ markdown-magic help extract
+```
+
+## Version 1
+
+If you used the old `markdown-extract` tool, the [old docs are still
+available][old-readme].
+
+[old-readme]: https://github.com/sean0x42/markdown-extract/blob/401d385bc68f9048a19e5a3dbe2c8d7bbb5292c0/README.md
