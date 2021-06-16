@@ -4,6 +4,16 @@ Extract sections of a markdown file. This project mostly exists to help me learn
 Rust, and to fill a niche requirement for extracting patch notes from
 a `CHANGELOG.md`.
 
+## Use Cases
+
+There aren't many, to be honest. 
+
+1. I created this tool to extract patch notes from a `CHANGELOG.md` by version.
+2. The talented folks at HashiCorp are using `markdown-extract` to extract API
+   documentation, and inject it into OpenAPI schemas.
+
+If you have another use for this tool, please let me know!
+
 ## Installation
 
 If you've got Rust installed on your system, you can simple install
@@ -61,9 +71,3 @@ $ markdown-extract --fr "^v1" CHANGELOG.md
 
 ...
 ```
-
-## Use Cases
-
-There aren't many. I created this tool to extract patch notes from a
-`CHANGELOG.md` by version. If you have another use for this binary, please let
-me know!
