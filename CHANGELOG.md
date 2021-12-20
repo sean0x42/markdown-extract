@@ -3,6 +3,10 @@
 Patch notes are automatically extracted from this changelog whenever a tag is
 pushed to the GitHub repository. The tag name must match a heading exactly.
 
+## v2.0.0
+
+Published on x.x.x
+
 ## v1.1.0
 
 - Exit with code 1 if no matches are found (#3, thanks @brennerm)

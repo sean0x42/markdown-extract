@@ -1,0 +1,13 @@
+[package]
+name = "markdown-magic-parser"
+description = "A simple markdown parser."
+version = "0.1.0"
+authors = ["Sean Bailey <hello@seanbailey.dev>"]
+edition = "2018"
+readme = "README.md"
+
+[dependencies]
+serde = "1.0.125"
+
+[dev-dependencies]
+insta = "1.7.1"

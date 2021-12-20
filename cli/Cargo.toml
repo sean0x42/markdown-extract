@@ -1,0 +1,15 @@
+[package]
+name = "markdown-magic"
+description = "A magical toolbelt for markdown."
+version = "2.0.0-alpha"
+authors = ["Sean Bailey <hello@seanbailey.dev>"]
+edition = "2018"
+readme = "README.md"
+
+[[bin]]
+name = "markdown-magic"
+path = "src/bin.rs"
+
+[dependencies]
+markdown-magic-parser = { path = "../parser" }
+structopt = "0.3"
