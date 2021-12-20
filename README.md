@@ -1,8 +1,32 @@
 # Markdown Extract
 
-Extract sections of a markdown file. This project mostly exists to help me learn
-Rust, and to fill a niche requirement for extracting patch notes from
-a `CHANGELOG.md`.
+Extract sections of a markdown file according to a regular expression. Given a
+document called `my-document.md`:
+
+```markdown
+# Welcome!
+
+This is my amazing markdown document.
+
+## Extract me!
+
+This section should be pulled out.
+```
+
+You could then extract the second section with the following command:
+
+```console
+$ markdown-extract "Extract me!" my-document.md
+## Extract me!
+
+This section should be pulled out.
+```
+
+For more help and configuration, use the following command:
+
+```console
+$ markdown-extract --help
+```
 
 ## Use Cases
 
@@ -16,7 +40,7 @@ If you have another use for this tool, please let me know!
 
 ## Installation
 
-If you've got Rust installed on your system, you can simple install
+If you've got Rust installed on your system, you can simply install
 `markdown-extract` with Cargo.
 
 ```console
@@ -36,38 +60,4 @@ You can then run the container with the following command:
 
 ```console
 $ docker run -it sean0x42/markdown-extract --help
-```
-
-## Usage
-
-View the help guide if you like.
-
-```console
-$ markdown-extract --help
-markdown-extract 1.1.0
-Extract sections of a markdown file
-
-USAGE:
-    markdown-extract [FLAGS] <pattern> <path>
-
-FLAGS:
-    -s, --case-sensitive          Treat pattern as case sensitive
-    -f, --first                   Only return the first match
-    -h, --help                    Prints help information
-    -i, --ignore-first-heading    Do not include the top level section heading
-    -r, --regex                   Compile pattern as a regular expression
-    -V, --version                 Prints version information
-
-ARGS:
-    <pattern>    Pattern to match against section headings
-    <path>       Path to markdown file
-```
-
-Then extract matching sections in a markdown file.
-
-```console
-$ markdown-extract --fr "^v1" CHANGELOG.md
-## v1.1.0
-
-...
 ```

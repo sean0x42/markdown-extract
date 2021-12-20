@@ -17,28 +17,21 @@ jobs:
     - name: Install markdown-extract
       run: cargo install markdown-extract
 
-    - name: Get tag string
+    - name: Construct tag string
       id: tag
       run: echo ::set-output name=value::${GITHUB_REF/refs\/tags\//}
 
-    - name: Get release body
-      id: release_notes
-      run: |
-        text=`~/.cargo/bin/markdown-extract -i ${{ steps.tag.outputs.value }} CHANGELOG.md`
-        echo $text
-        text="${text//'%'/'%25'}"
-        text="${text//$'\n'/'%0A'}"
-        text="${text//$'\r'/'%0D'}"
-        echo "::set-output name=value::$text"
+    - name: Extract release notes
+      id: notes
+      env:
+        TAG_NAME: ${{ steps.tags.outputs.value }}
+      run: ./scripts/extract_notes.sh
 
     - name: Create release
-      id: create_release
-      uses: actions/create-release@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v1
       with:
+        name: Release ${{ steps.tags.outputs.value }}
         tag_name: ${{ github.ref }}
-        release_name: Release ${{ steps.tags.outputs.value }}
-        body: |
-          ${{ steps.release_notes.outputs.value }}
+        body: ${{ steps.notes.outputs.value }}
+        token: ${{ secrets.GITHUB_TOKEN }}
         draft: true
