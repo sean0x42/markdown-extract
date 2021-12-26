@@ -1,10 +1,20 @@
+<div align="center">
+
 # Markdown Extract
 
-Extract sections of a markdown file according to a regular expression. Given a
-document called `my-document.md`:
+[![Crates.io](https://img.shields.io/crates/v/markdown-extract)](https://crates.io/crates/markdown-extract)
+[![Docker Pulls](https://img.shields.io/docker/pulls/sean0x42/markdown-extract)](https://hub.docker.com/r/sean0x42/markdown-extract)
+
+</div>
+
+Extract sections of a markdown file with a regular expression! Great for changelogs ;)
+
+## Usage
+
+Given a document called `my-document.md`:
 
 ```markdown
-# Welcome!
+# Welcome
 
 This is my amazing markdown document.
 
@@ -13,7 +23,7 @@ This is my amazing markdown document.
 This section should be pulled out.
 ```
 
-You could then extract the second section with the following command:
+You can extract the second section with the following command:
 
 ```console
 $ markdown-extract "Extract me!" my-document.md
@@ -21,22 +31,6 @@ $ markdown-extract "Extract me!" my-document.md
 
 This section should be pulled out.
 ```
-
-For more help and configuration, use the following command:
-
-```console
-$ markdown-extract --help
-```
-
-## Use Cases
-
-There aren't many, to be honest. 
-
-1. I created this tool to extract patch notes from a `CHANGELOG.md` by version.
-2. The talented folks at HashiCorp are using `markdown-extract` to extract API
-   documentation, and inject it into OpenAPI schemas.
-
-If you have another use for this tool, please let me know!
 
 ## Installation
 
@@ -53,11 +47,21 @@ A Docker container is also available, and can be installed with the following
 command:
 
 ```console
-$ docker pull sean0x42/markdown-extract
+$ docker pull sean0x42/markdown-extract:v2
 ```
 
 You can then run the container with the following command:
 
 ```console
-$ docker run -it sean0x42/markdown-extract --help
+$ docker run -it sean0x42/markdown-extract:v2 --help
 ```
+
+## Use Cases
+
+There aren't many, to be honest. 
+
+1. Extract patch notes from a `CHANGELOG.md` by version.
+2. The talented folks at HashiCorp are using `markdown-extract` to extract API
+   documentation, and inject it into OpenAPI schemas.
+
+If you have another use for this tool, please let me know!
