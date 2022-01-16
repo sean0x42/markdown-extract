@@ -8,6 +8,7 @@ pushed to the GitHub repository. The heading must start with the tag name.
 In this release, `markdown-extract` has been dramatically simplified, and comes
 with a more sensible API out of the box. There are a number of breaking changes.
 
+- Fixed matching headings inside code blocks.
 - Remove `--regex` flag. All inputs will be treated as regular expressions.
 - Remove `--first` flag. This is now the default behaviour.
 - Add `--all` flag. When setting this flag, all matches will be printed (not
