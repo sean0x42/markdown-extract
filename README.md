@@ -1,22 +1,41 @@
+<div align="center">
+
 # Markdown Extract
 
-Extract sections of a markdown file. This project mostly exists to help me learn
-Rust, and to fill a niche requirement for extracting patch notes from
-a `CHANGELOG.md`.
+[![Crates.io](https://img.shields.io/crates/v/markdown-extract)](https://crates.io/crates/markdown-extract)
+[![Docker Pulls](https://img.shields.io/docker/pulls/sean0x42/markdown-extract)](https://hub.docker.com/r/sean0x42/markdown-extract)
+[![Build & Test](https://github.com/sean0x42/markdown-extract/actions/workflows/build_and_test.yml/badge.svg)](https://github.com/sean0x42/markdown-extract/actions/workflows/build_and_test.yml)
 
-## Use Cases
+</div>
 
-There aren't many, to be honest. 
+Extract sections of a markdown file with a regular expression! Great for changelogs ;)
 
-1. I created this tool to extract patch notes from a `CHANGELOG.md` by version.
-2. The talented folks at HashiCorp are using `markdown-extract` to extract API
-   documentation, and inject it into OpenAPI schemas.
+## Usage
 
-If you have another use for this tool, please let me know!
+Given a document called `my-document.md`:
+
+```markdown
+# Welcome
+
+This is my amazing markdown document.
+
+## Extract me!
+
+This section should be pulled out.
+```
+
+You can extract the second section with the following command:
+
+```console
+$ markdown-extract "Extract me!" my-document.md
+## Extract me!
+
+This section should be pulled out.
+```
 
 ## Installation
 
-If you've got Rust installed on your system, you can simple install
+If you've got Rust installed on your system, you can simply install
 `markdown-extract` with Cargo.
 
 ```console
@@ -25,49 +44,34 @@ $ cargo install markdown-extract
 
 ### Docker
 
-A Docker container is also available, and can be installed with the following
+A Docker image is also available, and can be installed with the following
 command:
 
 ```console
-$ docker pull sean0x42/markdown-extract
+$ docker pull sean0x42/markdown-extract:v2
 ```
 
 You can then run the container with the following command:
 
 ```console
-$ docker run -it sean0x42/markdown-extract --help
+$ docker run -it sean0x42/markdown-extract:v2 --help
 ```
 
-## Usage
+Note that because markdown-extract accesses the file system, you will need
+to mount a volume if you want to access a file on the host. e.g.
 
-View the help guide if you like.
-
-```console
-$ markdown-extract --help
-markdown-extract 1.1.0
-Extract sections of a markdown file
-
-USAGE:
-    markdown-extract [FLAGS] <pattern> <path>
-
-FLAGS:
-    -s, --case-sensitive          Treat pattern as case sensitive
-    -f, --first                   Only return the first match
-    -h, --help                    Prints help information
-    -i, --ignore-first-heading    Do not include the top level section heading
-    -r, --regex                   Compile pattern as a regular expression
-    -V, --version                 Prints version information
-
-ARGS:
-    <pattern>    Pattern to match against section headings
-    <path>       Path to markdown file
+``` console
+$ docker run -v $PWD:/opt -it sean0x42/markdown-extract:v2 v2.0.0 /opt/CHANGELOG.md
 ```
 
-Then extract matching sections in a markdown file.
+If you know a better way of achieving this, please let me know!
 
-```console
-$ markdown-extract --fr "^v1" CHANGELOG.md
-## v1.1.0
+## Use Cases
 
-...
-```
+There aren't many, to be honest. 
+
+1. Extract patch notes from a `CHANGELOG.md` by version.
+2. The talented folks at HashiCorp are using `markdown-extract` to extract API
+   documentation, and inject it into OpenAPI schemas.
+
+If you have another use for this tool, please let me know!
