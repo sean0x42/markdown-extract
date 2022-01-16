@@ -1,4 +1,4 @@
-use markdown_extract::MarkdownExtract;
+use markdown_extract::extract_from_path;
 use regex::{Regex, RegexBuilder};
 use std::path::PathBuf;
 
@@ -17,7 +17,7 @@ fn should_handle_multiple_matching_sections() {
     let regex = create_regex("^%%");
 
     // When
-    let matches = MarkdownExtract::extract_from_path(&path, &regex).unwrap();
+    let matches = extract_from_path(&path, &regex).unwrap();
 
     // Then
     assert_eq!(matches.len(), 2);
@@ -32,7 +32,7 @@ fn should_not_match_headings_in_code_blocks() {
     let regex = create_regex("^%%");
 
     // When
-    let matches = MarkdownExtract::extract_from_path(&path, &regex).unwrap();
+    let matches = extract_from_path(&path, &regex).unwrap();
 
     // Then
     assert_eq!(matches.len(), 0);

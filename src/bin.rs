@@ -1,7 +1,7 @@
 mod error;
 
 use error::NoMatchesError;
-use markdown_extract::{MarkdownExtract, MarkdownSection};
+use markdown_extract::{extract_from_path, MarkdownSection};
 use regex::RegexBuilder;
 use std::error::Error;
 use std::path::PathBuf;
@@ -50,7 +50,7 @@ fn run() -> Result<(), Box<dyn Error>> {
         .build()
         .unwrap();
 
-    let matches = MarkdownExtract::extract_from_path(&opts.path, &regex)?;
+    let matches = extract_from_path(&opts.path, &regex)?;
 
     if matches.len() == 0 {
         return Err(Box::new(NoMatchesError::new()));

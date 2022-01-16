@@ -1,3 +1,4 @@
+# Builder image
 FROM rust:1.57 as builder
 WORKDIR /usr/src/markdown-extract
 COPY . .
