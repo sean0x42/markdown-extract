@@ -1,36 +1,35 @@
-name: Create Release
+name: "Create Release"
 
 on:
   push:
-    # Sequence of patterns matched against refs/tags
     tags:
-      - 'v*' # e.g. v1.0, v20.15.10
+      # Matches anything starting with a semantic version
+      - "v[0-9]+.[0-9]+.[0-9]+**"
 
 jobs:
   build:
-    name: Create Release
-    runs-on: ubuntu-latest
+    name: "Create Release"
+    runs-on: "ubuntu-latest"
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    
-    - name: Install markdown-extract
-      run: cargo install markdown-extract
+    - name: "Checkout code"
+      uses: "actions/checkout@v2"
 
-    - name: Construct tag string
-      id: tag
-      run: echo ::set-output name=value::${GITHUB_REF/refs\/tags\//}
+    - name: "Construct tag string"
+      id: "tag"
+      run: "echo ::set-output name=value::${GITHUB_REF/refs\/tags\//}"
 
-    - name: Extract release notes
-      id: notes
+    - name: "Extract release notes"
+      id: "notes"
       env:
-        TAG_NAME: ${{ steps.tags.outputs.value }}
-      run: ./scripts/extract_notes.sh
+        RELEASE_NAME: ${{ steps.tags.outputs.value }}
+        CHANGELOG_PATH: "./CHANGELOG.md"
+      run: "./.github/scripts/extract_notes.sh"
+      shell: "bash"
 
-    - name: Create release
-      uses: softprops/action-gh-release@v1
+    - name: "Create release"
+      uses: "softprops/action-gh-release@v1"
       with:
-        name: Release ${{ steps.tags.outputs.value }}
+        name: "Release ${{ steps.tags.outputs.value }}"
         tag_name: ${{ github.ref }}
         body: ${{ steps.notes.outputs.value }}
         token: ${{ secrets.GITHUB_TOKEN }}

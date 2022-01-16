@@ -1,7 +1,24 @@
-RELEASE_BODY=`~/.cargo/bin/markdown-extract --no-print-heading "^$TAG_NAME" CHANGELOG.md`
+#!/bin/bash
 
-RELEASE_BODY=="${RELEASE_BODY=//'%'/'%25'}"
-RELEASE_BODY=="${RELEASE_BODY=//$'\n'/'%0A'}"
-RELEASE_BODY=="${RELEASE_BODY=//$'\r'/'%0D'}"
+if [[ -z $CHANGELOG_PATH ]]; then
+   echo "Missing env var CHANGELOG_PATH"
+   exit 1
+fi
 
-echo "::set-output name=value::$RELEASE_BODY"
+if [[ -z $RELEASE_NAME ]]; then
+   echo "Missing env var RELEASE_NAME"
+   exit 1
+fi
+
+pattern="^$RELEASE_NAME"
+
+notes=$(docker run -it sean0x42/markdown-extract \
+              --no-print-matched-heading \
+              $pattern \
+              $CHANGELOG_PATH)
+
+notes=="${notes=//'%'/'%25'}"
+notes=="${notes=//$'\n'/'%0A'}"
+notes=="${notes=//$'\r'/'%0D'}"
+
+echo "::set-output name=value::$notes"
