@@ -44,7 +44,7 @@ $ cargo install markdown-extract
 
 ### Docker
 
-A Docker container is also available, and can be installed with the following
+A Docker image is also available, and can be installed with the following
 command:
 
 ```console
@@ -56,6 +56,15 @@ You can then run the container with the following command:
 ```console
 $ docker run -it sean0x42/markdown-extract:v2 --help
 ```
+
+Note that because markdown-extract accesses the file system, you will need
+to mount a volume if you want to access a file on the host. e.g.
+
+``` console
+$ docker run -v $PWD:/opt -it sean0x42/markdown-extract:v2 v2.0.0 /opt/CHANGELOG.md
+```
+
+If you know a better way of achieving this, please let me know!
 
 ## Use Cases
 
