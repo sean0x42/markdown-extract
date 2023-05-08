@@ -1,0 +1,22 @@
+name: Test for the new Github Action
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: extract-changelog
+        uses: axelrindle/markdown-extract@gh-action # TODO: Change repo after merge
+        with:
+          file: CHANGELOG.md
+          pattern: 'v2.0.0'
+      - name: Write output to file
+        run: |
+          printf '${{ steps.extract-changelog.outputs.markdown }}' > CHANGELOG-extracted.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: changelog
+          path: CHANGELOG-extracted.txt
