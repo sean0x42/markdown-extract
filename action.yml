@@ -7,6 +7,12 @@ inputs:
   pattern:
     description: 'Pattern to match against headings'
     required: true
+outputs:
+  markdown:
+    description: The extracted Markdown section body.
 runs:
   using: 'docker'
-  image: 'docker://sean0x42/markdown-extract:v2'
+  image: 'Dockerfile-action'
+  args:
+    - ${{ inputs.pattern }}
+    - ${{ inputs.file }}
