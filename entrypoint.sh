@@ -13,6 +13,5 @@ fi
 if [ "$FLAG_NO_PRINT_MATCHED_HEADING" = "true" ]; then
     ARGUMENTS="${ARGUMENTS} --no-print-matched-heading"
 fi
-ARGUMENTS="${ARGUMENTS} $*"
 
-{ echo "markdown<<$EOF"; /markdown-extract "$ARGUMENTS"; echo "$EOF"; } >> "$GITHUB_OUTPUT"
+{ echo "markdown<<$EOF"; /markdown-extract "$ARGUMENTS" "$@"; echo "$EOF"; } >> "$GITHUB_OUTPUT"
