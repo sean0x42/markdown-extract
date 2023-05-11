@@ -15,4 +15,4 @@ if [ "$FLAG_NO_PRINT_MATCHED_HEADING" = "true" ]; then
 fi
 ARGUMENTS="$ARGUMENTS $*"
 
-{ echo "markdown<<$EOF"; markdown-extract $ARGUMENTS; echo "$EOF"; }
+{ echo "markdown<<$EOF"; /markdown-extract $ARGUMENTS; echo "$EOF"; }
