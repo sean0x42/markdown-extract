@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - id: extract-changelog
-        uses: axelrindle/markdown-extract@gh-action # TODO: Change repo after merge
+        uses: sean0x42/markdown-extract@v2
         with:
           file: CHANGELOG.md
           pattern: 'v2.0.0'
