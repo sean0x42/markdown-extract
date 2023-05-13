@@ -22,7 +22,7 @@ outputs:
     description: The extracted Markdown section body.
 runs:
   using: 'docker'
-  image: 'Dockerfile-action'
+  image: './.github/action/Dockerfile'
   env:
     FLAG_CASE_SENSITIVE: ${{ inputs.case-sensitive }}
     FLAG_INCLUDE_ALL: ${{ inputs.include-all }}
