@@ -74,7 +74,7 @@ Here is a sample workflow usage:
 
 ```yaml
 - id: extract-changelog
-  uses: sean0x42/markdown-extract@v2.1.0 # TODO: Change repo after merge
+  uses: sean0x42/markdown-extract@v2
   with:
    file: CHANGELOG.md
    pattern: 'v2.0.0'
