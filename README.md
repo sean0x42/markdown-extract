@@ -66,16 +66,6 @@ $ docker run -v $PWD:/opt -it sean0x42/markdown-extract:v2 v2.0.0 /opt/CHANGELOG
 
 If you know a better way of achieving this, please let me know!
 
-## Use Cases
-
-There aren't many, to be honest. 
-
-1. Extract patch notes from a `CHANGELOG.md` by version.
-2. The talented folks at HashiCorp are using `markdown-extract` to extract API
-   documentation, and inject it into OpenAPI schemas.
-
-If you have another use for this tool, please let me know!
-
 ## Github Action
 
 This project can be used as a Github action.
@@ -100,3 +90,13 @@ Here is a sample workflow usage:
 For a complete reference view the [action.yml](action.yml).
 
 The action version corresponds to the version of the tool.
+
+## Use Cases
+
+There aren't many, to be honest. 
+
+1. Extract patch notes from a `CHANGELOG.md` by version.
+2. The talented folks at HashiCorp are using `markdown-extract` to extract API
+   documentation, and inject it into OpenAPI schemas.
+
+If you have another use for this tool, please let me know!
