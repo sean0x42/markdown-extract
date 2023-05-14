@@ -1,5 +1,8 @@
 name: 'Extract Markdown Section'
 description: 'Extract sections of a markdown file with a regular expression! Great for changelogs ;)'
+branding:
+  icon: crosshair
+  color: purple
 inputs:
   file:
     description: 'The input file'
