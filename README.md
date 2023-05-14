@@ -66,6 +66,31 @@ $ docker run -v $PWD:/opt -it sean0x42/markdown-extract:v2 v2.0.0 /opt/CHANGELOG
 
 If you know a better way of achieving this, please let me know!
 
+## Github Action
+
+This project can be used as a Github action.
+
+Here is a sample workflow usage:
+
+```yaml
+- id: extract-changelog
+  uses: sean0x42/markdown-extract@v2
+  with:
+   file: CHANGELOG.md
+   pattern: 'v2.0.0'
+- name: Write output to file
+  run: |
+    printf '${{ steps.extract-changelog.outputs.markdown }}' > CHANGELOG-extracted.txt
+- uses: actions/upload-artifact@v3
+  with:
+   name: changelog
+   path: CHANGELOG-extracted.txt
+```
+
+For a complete reference view the [action.yml](action.yml).
+
+The action version corresponds to the version of the tool.
+
 ## Use Cases
 
 There aren't many, to be honest. 
