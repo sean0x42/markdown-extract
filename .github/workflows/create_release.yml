@@ -12,25 +12,19 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
     - name: "Checkout code"
-      uses: "actions/checkout@v2"
+      uses: "actions/checkout@v3"
 
-    - name: "Construct tag string"
-      id: "tag"
-      run: "echo ::set-output name=value::${GITHUB_REF/refs\/tags\//}"
-
-    - name: "Extract release notes"
-      id: "notes"
-      env:
-        RELEASE_NAME: ${{ steps.tags.outputs.value }}
-        CHANGELOG_PATH: "./CHANGELOG.md"
-      run: "./.github/scripts/extract_notes.sh"
-      shell: "bash"
+    - id: extract-changelog
+      uses: sean0x42/markdown-extract@v2
+      with:
+       file: CHANGELOG.md
+       pattern: ${{ github.ref_name }}
 
     - name: "Create release"
       uses: "softprops/action-gh-release@v1"
       with:
-        name: "Release ${{ steps.tags.outputs.value }}"
+        name: "Release ${{ github.ref_name }}"
         tag_name: ${{ github.ref }}
-        body: ${{ steps.notes.outputs.value }}
+        body: ${{ steps.extract-changelog.outputs.markdown }}
         token: ${{ secrets.GITHUB_TOKEN }}
         draft: true
