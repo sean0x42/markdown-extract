@@ -1,7 +1,6 @@
-name: Test for the new Github Action
+name: Test the Github Action
 
-on:
-  workflow_dispatch:
+on: [workflow_dispatch]
 
 jobs:
   test:
