@@ -1,78 +1,63 @@
-mod error;
-
-use error::NoMatchesError;
+use anyhow::{bail, Result};
+use clap::Parser;
 use markdown_extract::{extract_from_path, MarkdownSection};
 use regex::RegexBuilder;
-use std::error::Error;
 use std::path::PathBuf;
-use structopt::StructOpt;
 
-/// Extract sections of a markdown file according to a regular expression.
-#[derive(StructOpt)]
-#[structopt(name = "markdown-extract")]
-pub struct Opts {
+#[derive(Parser)]
+#[command(version, about, long_about = None)]
+pub struct Cli {
     /// Print all matching sections (don't quit after first match)
-    #[structopt(short, long)]
+    #[arg(short, long)]
     all: bool,
 
     /// Treat pattern as case sensitive
-    #[structopt(short = "s", long)]
+    #[arg(short = 's', long)]
     case_sensitive: bool,
 
     /// Do not include the matched heading in the output
-    #[structopt(short, long)]
+    #[arg(short, long)]
     no_print_matched_heading: bool,
 
     /// Pattern to match against headings
+    #[arg(value_name = "PATTERN")]
     pattern: String,
 
     /// Path to markdown file
-    #[structopt(parse(from_os_str))]
+    #[arg(value_name = "FILE")]
     path: PathBuf,
 }
 
-fn print_section(section: &MarkdownSection, no_print_matched_heading: bool) {
-    let iterator = section
-        .iter()
-        .skip(if no_print_matched_heading { 1 } else { 0 });
+fn main() -> Result<()> {
+    let cli = Cli::parse();
 
-    for line in iterator {
-        println!("{}", line);
-    }
-}
-
-fn run() -> Result<(), Box<dyn Error>> {
-    let opts = Opts::from_args();
-
-    let regex = RegexBuilder::new(&opts.pattern)
-        .case_insensitive(!opts.case_sensitive)
+    let regex = RegexBuilder::new(&cli.pattern)
+        .case_insensitive(!cli.case_sensitive)
         .size_limit(1024 * 100) // 100 kb
         .build()
         .unwrap();
 
-    let matches = extract_from_path(&opts.path, &regex)?;
+    let matches = extract_from_path(&cli.path, &regex)?;
 
     if matches.len() == 0 {
-        return Err(Box::new(NoMatchesError::new()));
+        bail!("No matches found for pattern: {}", cli.pattern);
     }
 
-    if !opts.all {
-        print_section(&matches[0], opts.no_print_matched_heading);
-    } else {
-        for m in matches.iter() {
-            print_section(&m, opts.no_print_matched_heading);
-        }
+    if !cli.all {
+        print_section(&matches[0], cli.no_print_matched_heading);
+        return Ok(());
     }
+
+    matches
+        .iter()
+        .for_each(|m| print_section(&m, cli.no_print_matched_heading));
 
     Ok(())
 }
 
-fn main() {
-    std::process::exit(match run() {
-        Ok(_) => 0,
-        Err(error) => {
-            println!("Error: {}", error);
-            1
-        }
-    })
+fn print_section(section: &MarkdownSection, no_print_matched_heading: bool) {
+    section
+        .iter()
+        .skip(if no_print_matched_heading { 1 } else { 0 })
+        .for_each(|line| println!("{}", line));
 }

@@ -1,21 +1,15 @@
 name: Test the Github Action
-
-on: [workflow_dispatch]
-
+on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - id: extract-changelog
-        uses: sean0x42/markdown-extract@v2
+      - uses: actions/checkout@v4
+      - uses: ./
         with:
           file: CHANGELOG.md
-          pattern: 'v2.0.0'
-      - name: Write output to file
-        run: |
-          printf '${{ steps.extract-changelog.outputs.markdown }}' > CHANGELOG-extracted.txt
-      - uses: actions/upload-artifact@v3
+          pattern: "v2.0.0"
+      - uses: ./
         with:
-          name: changelog
-          path: CHANGELOG-extracted.txt
+          file: CHANGELOG.md
+          pattern: "this does not exist"
