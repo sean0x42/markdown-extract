@@ -1,8 +1,11 @@
-use anyhow::{bail, Result};
+use anyhow::{anyhow, bail, Context, Result};
 use clap::Parser;
 use markdown_extract::{extract_from_path, MarkdownSection};
 use regex::RegexBuilder;
-use std::path::PathBuf;
+use std::{
+    io::{self, Write},
+    path::PathBuf,
+};
 
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
@@ -37,27 +40,35 @@ fn main() -> Result<()> {
         .build()
         .unwrap();
 
-    let matches = extract_from_path(&cli.path, &regex)?;
+    let matches = extract_from_path(&cli.path, &regex)
+        .with_context(|| format!("Unable to extract at path: {}", cli.path.display()))?;
 
     if matches.len() == 0 {
         bail!("No matches found for pattern: {}", cli.pattern);
     }
 
     if !cli.all {
-        print_section(&matches[0], cli.no_print_matched_heading);
-        return Ok(());
+        return print_section(&matches[0], cli.no_print_matched_heading);
     }
 
-    matches
-        .iter()
-        .for_each(|m| print_section(&m, cli.no_print_matched_heading));
+    // match is a reserved keyword
+    for m in matches {
+        print_section(&m, cli.no_print_matched_heading)?;
+    }
 
     Ok(())
 }
 
-fn print_section(section: &MarkdownSection, no_print_matched_heading: bool) {
-    section
+fn print_section(section: &MarkdownSection, no_print_matched_heading: bool) -> Result<()> {
+    let stdout = io::stdout();
+    let mut handle = stdout.lock();
+
+    for line in section
         .iter()
         .skip(if no_print_matched_heading { 1 } else { 0 })
-        .for_each(|line| println!("{}", line));
+    {
+        writeln!(handle, "{}", line).with_context(|| format!("Trying to print line: {}", line))?;
+    }
+
+    handle.flush().map_err(|err| anyhow!(err))
 }
