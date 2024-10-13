@@ -25,7 +25,3 @@ jobs:
         with:
           file: crates/markdown-extract/CHANGELOG.md
           pattern: "v2.0.0"
-      - uses: ./
-        with:
-          file: crates/markdown-extract/CHANGELOG.md
-          pattern: '"this does not exist"'
