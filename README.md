@@ -39,7 +39,7 @@ If you've got Rust installed on your system, you can simply install
 `markdown-extract` with Cargo.
 
 ```console
-$ cargo install markdown-extract
+$ cargo install markdown-extract-cli
 ```
 
 ### Docker
