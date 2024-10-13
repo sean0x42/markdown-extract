@@ -59,15 +59,15 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-fn print_section(section: &MarkdownSection, no_print_matched_heading: bool) -> Result<()> {
+fn print_section(section: &MarkdownSection, skip_printing_matched_heading: bool) -> Result<()> {
     let stdout = io::stdout();
     let mut handle = stdout.lock();
 
     for line in section
         .iter()
-        .skip(if no_print_matched_heading { 1 } else { 0 })
+        .skip(if skip_printing_matched_heading { 1 } else { 0 })
     {
-        writeln!(handle, "{}", line).with_context(|| format!("Trying to print line: {}", line))?;
+        writeln!(handle, "{}", line).with_context(|| format!("Failed to print line: {}", line))?;
     }
 
     handle.flush().map_err(|err| anyhow!(err))

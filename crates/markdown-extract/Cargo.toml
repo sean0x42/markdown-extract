@@ -1,7 +1,7 @@
 [package]
 name = "markdown-extract"
 description = "Extract sections of a markdown file with a regular expression"
-version = "2.0.1"
+version = "2.0.0"
 edition = "2021"
 authors = ["Sean Bailey <hello@seanbailey.dev>"]
 license = "MIT"
