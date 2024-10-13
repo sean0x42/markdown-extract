@@ -8,7 +8,7 @@
 
 </div>
 
-Extract sections of a markdown file with a regular expression! Great for changelogs ;)
+Extract sections of a markdown file with a regular expression.
 
 ## Usage
 
@@ -39,7 +39,7 @@ If you've got Rust installed on your system, you can simply install
 `markdown-extract` with Cargo.
 
 ```console
-$ cargo install markdown-extract
+$ cargo install markdown-extract-cli
 ```
 
 ### Docker
@@ -74,9 +74,9 @@ Here is a sample workflow usage:
 
 ```yaml
 - id: extract-changelog
-  uses: sean0x42/markdown-extract@v2
+  uses: sean0x42/markdown-extract@v4
   with:
-   file: CHANGELOG.md
+   file: crates/markdown-extract/CHANGELOG.md
    pattern: 'v2.0.0'
 - name: Write output to file
   run: |
@@ -93,7 +93,7 @@ The action version corresponds to the version of the tool.
 
 ## Use Cases
 
-There aren't many, to be honest. 
+There aren't many, to be honest.
 
 1. Extract patch notes from a `CHANGELOG.md` by version.
 2. The talented folks at HashiCorp are using `markdown-extract` to extract API

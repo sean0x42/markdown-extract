@@ -1,15 +1,27 @@
-name: Build & Test
-
+name: Build and Test
 on: [push]
-
 jobs:
-  build:
+  build-rust:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - name: Verify package builds
+        run: cargo build --verbose
+      - name: Run tests
+        run: cargo test --verbose
 
-    - name: Build
-      run: cargo build --verbose
+  build-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify docker image builds
+        run: docker build .
 
-    - name: Run tests
-      run: cargo test --verbose
+  test-action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./
+        with:
+          file: crates/markdown-extract/CHANGELOG.md
+          pattern: "v2.0.0"

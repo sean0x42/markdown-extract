@@ -1,0 +1,17 @@
+[package]
+name = "markdown-extract"
+description = "Extract sections of a markdown file with a regular expression"
+version = "2.0.0"
+edition = "2021"
+authors = ["Sean Bailey <hello@seanbailey.dev>"]
+license = "MIT"
+repository = "https://github.com/sean0x42/markdown-extract"
+keywords = ["markdown", "extract"]
+readme = "README.md"
+
+[lib]
+name = "markdown_extract"
+crate-type = ["lib"]
+
+[dependencies]
+regex = "1.3"

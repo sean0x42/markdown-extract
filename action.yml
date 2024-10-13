@@ -1,31 +1,31 @@
-name: 'Extract Markdown Section'
-description: 'Extract sections of a markdown file with a regular expression! Great for changelogs ;)'
+name: "Extract Markdown Section"
+description: "Extract sections of a markdown file with a regular expression"
 branding:
   icon: crosshair
   color: purple
 inputs:
   file:
-    description: 'The input file'
+    description: "The input file"
     required: true
   pattern:
-    description: 'Pattern to match against headings'
+    description: "Pattern to match against headings"
     required: true
   case-sensitive:
-    description: 'Treat pattern as case sensitive'
-    default: 'false'
+    description: "Treat pattern as case sensitive"
+    default: "false"
   include-all:
     description: >
       'Print all matching sections (don't quit after first match)'
-    default: 'false'
+    default: "false"
   no-print-matched-heading:
-    description: 'Do not include the matched heading in the output'
-    default: 'false'
+    description: "Do not include the matched heading in the output"
+    default: "false"
 outputs:
   markdown:
     description: The extracted Markdown section body.
 runs:
-  using: 'docker'
-  image: './.github/action/Dockerfile'
+  using: "docker"
+  image: "./.github/action/Dockerfile"
   env:
     FLAG_CASE_SENSITIVE: ${{ inputs.case-sensitive }}
     FLAG_INCLUDE_ALL: ${{ inputs.include-all }}

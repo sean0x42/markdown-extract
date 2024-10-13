@@ -1,22 +1,3 @@
-[package]
-name = "markdown-extract"
-description = "Extract sections of a markdown file."
-version = "2.0.0"
-authors = ["Sean Bailey <hello@seanbailey.dev>"]
-license = "MIT"
-repository = "https://github.com/sean0x42/markdown-extract"
-keywords = ["markdown", "extract"]
-edition = "2018"
-exclude = [".github/*"]
-readme = "README.md"
-
-[lib]
-path = "src/lib.rs"
-
-[[bin]]
-name = "markdown-extract"
-path = "src/bin.rs"
-
-[dependencies]
-regex = "1.3"
-structopt = "0.3"
+[workspace]
+members = ["crates/markdown-extract", "crates/markdown-extract-cli"]
+resolver = "2"

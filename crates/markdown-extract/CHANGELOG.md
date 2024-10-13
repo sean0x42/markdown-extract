@@ -1,8 +1,5 @@
 # Changelog
 
-Patch notes are automatically extracted from this changelog whenever a tag is
-pushed to the GitHub repository. The heading must start with the tag name.
-
 ## v2.0.0 (January 2021)
 
 In this release, `markdown-extract` has been dramatically simplified, and comes

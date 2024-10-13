@@ -4,10 +4,11 @@ mod state;
 use heading::try_parse_heading;
 use regex::Regex;
 use state::State;
-use std::fs::File;
-use std::io::prelude::*;
-use std::io::BufReader;
-use std::path::PathBuf;
+use std::{
+    fs::File,
+    io::{prelude::*, BufReader},
+    path::PathBuf,
+};
 
 pub type MarkdownSection = Vec<String>;
 
