@@ -1,11 +1,3 @@
-# [package]
-# name = "markdown-extract-monorepo"
-# description = "Extract sections of a markdown file with a regular expression"
-# version = "0.1.0"
-# authors = ["Sean Bailey <hello@seanbailey.dev>"]
-# license = "MIT"
-# readme = "README.md"
-
 [workspace]
 members = ["crates/markdown-extract", "crates/markdown-extract-cli"]
 resolver = "2"
